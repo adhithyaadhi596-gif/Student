@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduPortal — Welcome</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Raleway:wght@300;400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 100vw; height: 100vh; overflow: hidden;
+    background: linear-gradient(180deg, #0a0e27 0%, #1a2a6c 40%, #b21f1f 75%, #fdbb2d 100%);
+    font-family: 'Raleway', sans-serif;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+
+  /* Stars */
+  .stars { position: fixed; top: 0; left: 0; width: 100%; height: 60%; z-index: 0; }
+  .star {
+    position: absolute; width: 2px; height: 2px;
+    background: white; border-radius: 50%;
+    animation: twinkle 3s infinite;
+  }
+  @keyframes twinkle { 0%,100%{opacity:0.2;} 50%{opacity:1;} }
+
+  /* Ground */
+  .ground {
+    position: fixed; bottom: 0; left: 0; width: 100%; height: 28%;
+    background: linear-gradient(180deg, #2d5016 0%, #1a3009 100%);
+    z-index: 1;
+    overflow: hidden;
+  }
+  .ground::before {
+    content:''; position:absolute; top:0; left:0; width:200%; height:8px;
+    background: repeating-linear-gradient(90deg,#3d6b1e 0px,#3d6b1e 60px,#4a8025 60px,#4a8025 120px);
+    animation: groundMove 4s linear infinite;
+  }
+  @keyframes groundMove { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* Road lines */
+  .road-line {
+    position: absolute; bottom: 40%; left: -100px;
+    width: 80px; height: 5px; background: rgba(255,255,255,0.6);
+    border-radius: 3px;
+    animation: roadMove 2s linear infinite;
+  }
+  .road-line:nth-child(2){ animation-delay: -0.7s; }
+  .road-line:nth-child(3){ animation-delay: -1.4s; }
+  @keyframes roadMove { from{transform:translateX(-200px)} to{transform:translateX(110vw)} }
+
+  /* College silhouette */
+  .building {
+    position: fixed; bottom: 26%; left: 50%; transform: translateX(-50%);
+    z-index: 2; display: flex; align-items: flex-end; gap: 0;
+  }
+  .b-main {
+    width: 200px; height: 120px;
+    background: #0d1b4b;
+    border-top: 4px solid #2244cc;
+    position: relative;
+  }
+  .b-wing {
+    width: 80px; height: 80px;
+    background: #0a1540;
+    border-top: 3px solid #1a33aa;
+  }
+  .b-dome {
+    position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 40px;
+    background: #0d1b4b;
+    border-radius: 50% 50% 0 0;
+    border-top: 3px solid #3355dd;
+  }
+  .b-win {
+    position: absolute; width: 18px; height: 22px;
+    background: rgba(255,220,80,0.7); border: 1px solid #ffdd55;
+    animation: winBlink 3s infinite;
+  }
+  .b-win:nth-child(1){ top:20px; left:20px; }
+  .b-win:nth-child(2){ top:20px; left:50px; }
+  .b-win:nth-child(3){ top:20px; left:80px; }
+  .b-win:nth-child(4){ top:20px; left:110px; }
+  .b-win:nth-child(5){ top:60px; left:35px; }
+  .b-win:nth-child(6){ top:60px; left:90px; }
+  @keyframes winBlink { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+  /* Walking person SVG sprite */
+  .walker-wrap {
+    position: fixed; bottom: 28%; left: -100px;
+    z-index: 10;
+    animation: walkAcross 8s linear infinite;
+  }
+  @keyframes walkAcross {
+    0%   { left: -120px; transform: scaleX(1); }
+    49%  { left: calc(100vw + 40px); transform: scaleX(1); }
+    50%  { left: calc(100vw + 40px); transform: scaleX(-1); }
+    99%  { left: -120px; transform: scaleX(-1); }
+    100% { left: -120px; transform: scaleX(1); }
+  }
+
+  .person {
+    width: 60px; height: 100px;
+    position: relative;
+  }
+
+  /* CSS animated person */
+  .head {
+    width: 22px; height: 22px;
+    background: #f4c5a0; border-radius: 50%;
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    border: 2px solid #d4956a;
+  }
+  .body {
+    width: 18px; height: 28px;
+    background: #2244cc; border-radius: 4px;
+    position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
+  }
+  .arm {
+    width: 8px; height: 22px;
+    background: #2244cc; border-radius: 4px;
+    position: absolute; top: 24px;
+    transform-origin: top center;
+  }
+  .arm.left  { left: 10px; animation: armSwingL 0.6s ease-in-out infinite alternate; }
+  .arm.right { right: 10px; animation: armSwingR 0.6s ease-in-out infinite alternate; }
+  @keyframes armSwingL { from{transform:rotate(-30deg)} to{transform:rotate(30deg)} }
+  @keyframes armSwingR { from{transform:rotate(30deg)} to{transform:rotate(-30deg)} }
+
+  .leg {
+    width: 9px; height: 28px;
+    background: #111; border-radius: 4px;
+    position: absolute; top: 48px;
+    transform-origin: top center;
+  }
+  .leg.left  { left: 17px; animation: legSwingL 0.6s ease-in-out infinite alternate; }
+  .leg.right { right: 17px; animation: legSwingR 0.6s ease-in-out infinite alternate; }
+  @keyframes legSwingL { from{transform:rotate(-25deg)} to{transform:rotate(25deg)} }
+  @keyframes legSwingR { from{transform:rotate(25deg)} to{transform:rotate(-25deg)} }
+
+  .shoe {
+    width: 12px; height: 6px;
+    background: #333; border-radius: 3px;
+    position: absolute; bottom: 0;
+  }
+  .leg.left .shoe  { left: -2px; }
+  .leg.right .shoe { right: -2px; }
+
+  /* Title */
+  .title-wrap {
+    position: fixed; top: 12%; z-index: 20;
+    text-align: center;
+    animation: fadeDown 1.2s ease both;
+  }
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-30px)} to{opacity:1;transform:translateY(0)} }
+
+  .title-wrap h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    color: #fff;
+    text-shadow: 0 0 40px rgba(100,160,255,0.8), 0 4px 20px rgba(0,0,0,0.8);
+    letter-spacing: 2px;
+  }
+  .title-wrap p {
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* Enter button */
+  .enter-btn {
+    position: fixed; bottom: 12%; z-index: 20;
+    padding: 16px 60px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    letter-spacing: 4px;
+    color: #fff;
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.08);
+    transition: all 0.4s ease;
+    animation: pulse 2.5s ease-in-out infinite, fadeUp 1.5s 0.5s ease both;
+    text-transform: uppercase;
+  }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes pulse {
+    0%,100%{ box-shadow: 0 0 0 0 rgba(255,255,255,0.4), 0 0 20px rgba(100,160,255,0.2); }
+    50%{ box-shadow: 0 0 0 12px rgba(255,255,255,0), 0 0 40px rgba(100,160,255,0.6); }
+  }
+  .enter-btn:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: #fff;
+    transform: scale(1.06);
+    letter-spacing: 6px;
+  }
+
+  /* Fireflies */
+  .firefly {
+    position: fixed; width: 4px; height: 4px;
+    background: #fdff90; border-radius: 50%;
+    box-shadow: 0 0 8px #fdff90;
+    z-index: 5;
+    animation: fly 6s ease-in-out infinite;
+  }
+  @keyframes fly {
+    0%{transform:translate(0,0);opacity:0}
+    20%{opacity:1}
+    50%{transform:translate(var(--tx),var(--ty));opacity:0.8}
+    80%{opacity:1}
+    100%{transform:translate(0,0);opacity:0}
+  }
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<!-- Fireflies -->
+<div id="fireflies"></div>
+
+<!-- Building -->
+<div class="building">
+  <div class="b-wing"></div>
+  <div class="b-main">
+    <div class="b-dome"></div>
+    <div class="b-win"></div>
+    <div class="b-win"></div>
+    <div class="b-win"></div>
+    <div class="b-win"></div>
+    <div class="b-win"></div>
+    <div class="b-win"></div>
+  </div>
+  <div class="b-wing"></div>
+</div>
+
+<!-- Ground -->
+<div class="ground">
+  <div class="road-line"></div>
+  <div class="road-line"></div>
+  <div class="road-line"></div>
+</div>
+
+<!-- Walking person -->
+<div class="walker-wrap">
+  <div class="person">
+    <div class="head"></div>
+    <div class="body"></div>
+    <div class="arm left"></div>
+    <div class="arm right"></div>
+    <div class="leg left"><div class="shoe"></div></div>
+    <div class="leg right"><div class="shoe"></div></div>
+  </div>
+</div>
+
+<!-- Title -->
+<div class="title-wrap">
+  <h1>EduPortal</h1>
+  <p>College Management System</p>
+</div>
+
+<!-- Enter Button -->
+<a href="home.html" class="enter-btn">Enter</a>
+
+<script>
+// Stars
+const starsEl = document.getElementById('stars');
+for(let i=0;i<120;i++){
+  const s=document.createElement('div');
+  s.className='star';
+  s.style.left=Math.random()*100+'%';
+  s.style.top=Math.random()*100+'%';
+  s.style.animationDelay=Math.random()*3+'s';
+  s.style.width=s.style.height=(Math.random()*2+1)+'px';
+  starsEl.appendChild(s);
+}
+
+// Fireflies
+const ff=document.getElementById('fireflies');
+for(let i=0;i<15;i++){
+  const f=document.createElement('div');
+  f.className='firefly';
+  f.style.left=Math.random()*100+'%';
+  f.style.top=(50+Math.random()*40)+'%';
+  f.style.setProperty('--tx',(Math.random()*200-100)+'px');
+  f.style.setProperty('--ty',(Math.random()*-100)+'px');
+  f.style.animationDelay=Math.random()*6+'s';
+  f.style.animationDuration=(4+Math.random()*4)+'s';
+  ff.appendChild(f);
+}
+</script>
+</body>
+</html>
